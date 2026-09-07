@@ -1,0 +1,30 @@
+<section class="section">
+  <div class="container">
+    <div class="section-head" appReveal>
+      <span class="eyebrow">{{ 'section.services.eyebrow' | t }}</span>
+      <h2>{{ 'section.services.title' | t }}</h2>
+    </div>
+    <p appReveal class="lead">{{ 'section.services.lead' | t }}</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="section">
+  <div class="container">
+    <div class="services-grid">
+      <div class="service-card" appReveal *ngFor="let s of services; let i = index">
+        <div class="service-icon" [class.alt]="i === 1">
+          <span [ngSwitch]="s.icone">
+            <span *ngSwitchCase="'bolt'">⚡</span>
+            <span *ngSwitchCase="'snowflake'">❄</span>
+            <span *ngSwitchCase="'fire'">🛡</span>
+            <span *ngSwitchDefault>🛠</span>
+          </span>
+        </div>
+        <h3>{{ s.titre | bilingual:s.titre_en }}</h3>
+        <p>{{ s.description | bilingual:s.description_en }}</p>
+      </div>
+    </div>
+  </div>
+</section>

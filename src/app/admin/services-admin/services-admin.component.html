@@ -1,0 +1,80 @@
+<div class="admin-header">
+  <div>
+    <h1>Services</h1>
+    <p>Les trois domaines d'intervention affichés sur le site.</p>
+  </div>
+  <button class="btn-admin" (click)="ouvrirCreation()">+ Ajouter un service</button>
+</div>
+
+<div class="admin-table-wrap">
+  <table class="admin-table" *ngIf="items.length; else vide">
+    <thead>
+      <tr><th>Ordre</th><th>Titre</th><th>Description</th><th></th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of items">
+        <td>{{ s.ordre }}</td>
+        <td>{{ s.titre }}</td>
+        <td>{{ s.description | slice:0:70 }}{{ s.description.length > 70 ? '…' : '' }}</td>
+        <td>
+          <div class="admin-actions">
+            <button class="btn-admin-ghost" (click)="ouvrirEdition(s)">Modifier</button>
+            <button class="btn-admin-danger" (click)="supprimer(s)">Supprimer</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #vide>
+    <p class="admin-empty" *ngIf="!chargement">Aucun service pour l'instant.</p>
+  </ng-template>
+</div>
+
+<div class="admin-modal-overlay" *ngIf="modalOuvert" (click)="fermer()">
+  <div class="admin-modal" (click)="$event.stopPropagation()">
+    <h2>{{ edition ? 'Modifier le service' : 'Nouveau service' }}</h2>
+
+    <div class="admin-alert admin-alert-error" *ngIf="erreur">{{ erreur }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="enregistrer()">
+      <div class="admin-field">
+        <label>Titre (français)</label>
+        <input type="text" formControlName="titre">
+      </div>
+      <div class="admin-field">
+        <label>Description (français)</label>
+        <textarea rows="3" formControlName="description"></textarea>
+      </div>
+      <div class="admin-field">
+        <label>Titre (anglais) — optionnel</label>
+        <input type="text" formControlName="titre_en">
+      </div>
+      <div class="admin-field">
+        <label>Description (anglais) — optionnel</label>
+        <textarea rows="3" formControlName="description_en"></textarea>
+        <p class="admin-field-hint">Laisse vide pour reprendre le contenu français par défaut.</p>
+      </div>
+      <div class="admin-field-row">
+        <div class="admin-field">
+          <label>Icône</label>
+          <select formControlName="icone">
+            <option value="bolt">Électricité</option>
+            <option value="snowflake">Climatisation</option>
+            <option value="fire">Sécurité incendie</option>
+          </select>
+        </div>
+        <div class="admin-field">
+          <label>Ordre d'affichage</label>
+          <input type="number" formControlName="ordre">
+        </div>
+      </div>
+
+      <div class="admin-modal-actions">
+        <button type="button" class="btn-admin-ghost" (click)="fermer()">Annuler</button>
+        <button type="submit" class="btn-admin" [disabled]="enregistrement">
+          {{ enregistrement ? 'Enregistrement...' : 'Enregistrer' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

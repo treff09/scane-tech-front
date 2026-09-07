@@ -1,0 +1,26 @@
+<div class="login-screen">
+  <div class="login-card">
+    <img src="assets/images/logo-scane-tech.png" alt="Scane-Tech" class="login-logo">
+    <h1>Espace d'administration</h1>
+    <p class="login-sub">Gestion du contenu du site Scane-Tech</p>
+
+    <div class="admin-alert admin-alert-error" *ngIf="erreur">{{ erreur }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="connexion()">
+      <div class="field">
+        <label>Identifiant</label>
+        <input type="text" formControlName="username" placeholder="Nom d'utilisateur" autocomplete="username">
+      </div>
+      <div class="field">
+        <label>Mot de passe</label>
+        <input type="password" formControlName="password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+
+      <button type="submit" class="btn-login" [disabled]="enCours">
+        {{ enCours ? 'Connexion en cours...' : 'Se connecter' }}
+      </button>
+    </form>
+
+    <a routerLink="/" class="back-link">← Retour au site</a>
+  </div>
+</div>

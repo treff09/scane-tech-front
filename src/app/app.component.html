@@ -1,0 +1,11 @@
+<app-splash *ngIf="showSplash && !estAdmin" (finished)="onSplashFinished()"></app-splash>
+
+<app-header *ngIf="!estAdmin"></app-header>
+
+<main [@routeAnimation]="prepareRoute(outlet)">
+  <router-outlet #outlet="outlet"></router-outlet>
+</main>
+
+<app-footer *ngIf="!estAdmin"></app-footer>
+
+<app-cookie-consent *ngIf="!estAdmin"></app-cookie-consent>

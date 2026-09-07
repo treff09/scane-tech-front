@@ -1,0 +1,119 @@
+.admin-shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+  font-family: var(--font-body);
+}
+
+.admin-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--green-dark);
+  color: #cfe6d8;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  margin-bottom: 12px;
+}
+.admin-brand img { height: 28px; filter: brightness(0) invert(1); }
+.admin-brand span { font-size: 0.78rem; color: #a9c9b4; font-weight: 600; }
+
+.admin-nav { display: flex; flex-direction: column; gap: 2px; padding: 0 12px; flex: 1; }
+
+.admin-nav a {
+  padding: 11px 14px;
+  border-radius: 7px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #cfe6d8;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.admin-nav a:hover { background: rgba(255,255,255,.08); }
+.admin-nav a.active { background: var(--orange); color: #fff; font-weight: 600; }
+
+.admin-sidebar-footer {
+  padding: 16px 20px 0;
+  border-top: 1px solid rgba(255,255,255,.12);
+  margin-top: 12px;
+}
+
+.admin-view-site {
+  display: block;
+  font-size: 0.8rem;
+  color: #a9c9b4;
+  margin-bottom: 14px;
+}
+.admin-view-site:hover { color: #fff; }
+
+.admin-user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.admin-user span {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.admin-user button {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.3);
+  color: #fff;
+  font-size: 0.72rem;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.admin-user button:hover { background: rgba(255,255,255,.1); }
+
+.admin-content {
+  flex: 1;
+  padding: 32px 36px;
+  min-width: 0;
+}
+
+.admin-burger {
+  display: none;
+  position: fixed;
+  top: 16px; left: 16px;
+  z-index: 500;
+  background: var(--green-dark);
+  border: none;
+  border-radius: 8px;
+  width: 42px; height: 42px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.admin-burger span { width: 20px; height: 2px; background: #fff; }
+
+@media (max-width: 900px) {
+  .admin-sidebar {
+    position: fixed;
+    left: -260px;
+    z-index: 450;
+    transition: left 0.25s ease;
+    width: 240px;
+  }
+  .admin-sidebar.open { left: 0; }
+  .admin-burger { display: flex; }
+  .admin-content { padding: 80px 20px 40px; }
+}

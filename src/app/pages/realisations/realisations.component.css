@@ -1,0 +1,46 @@
+.client-strip { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px; }
+
+.client-logo {
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 14px 24px;
+  display: flex; align-items: center;
+  height: 68px;
+  border-radius: 10px;
+}
+.client-logo img { height: 42px; width: auto; }
+
+.realisations-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.realisation-card {
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 14px 30px rgba(21,61,40,.1);
+}
+.realisation-card img { width: 100%; height: 220px; object-fit: cover; display: block; }
+.realisation-info {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(0deg, rgba(21,61,40,.92), transparent);
+  color: #fff;
+  padding: 22px 18px 14px;
+}
+.realisation-info h4 { margin-bottom: 4px; font-size: 1rem; color: #fff; }
+.realisation-info p { margin: 0; font-size: 0.82rem; color: #cfe6d8; }
+
+.realisation-note {
+  font-size: 0.92rem;
+  font-style: italic;
+  border: 1px dashed var(--line);
+  padding: 22px;
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+@media (min-width: 700px) {
+  .realisations-grid { grid-template-columns: repeat(3, 1fr); }
+}

@@ -1,0 +1,52 @@
+<div class="admin-header">
+  <div>
+    <h1>Nos directions</h1>
+    <p>L'organisation de l'entreprise (Opérations, QHSE...).</p>
+  </div>
+  <button class="btn-admin" (click)="ouvrirCreation()">+ Ajouter une direction</button>
+</div>
+
+<div class="admin-table-wrap">
+  <table class="admin-table" *ngIf="items.length; else vide">
+    <thead><tr><th>Ordre</th><th>Nom</th><th>Sous-titre</th><th></th></tr></thead>
+    <tbody>
+      <tr *ngFor="let d of items">
+        <td>{{ d.ordre }}</td>
+        <td>{{ d.nom }}</td>
+        <td>{{ d.sous_titre }}</td>
+        <td>
+          <div class="admin-actions">
+            <button class="btn-admin-ghost" (click)="ouvrirEdition(d)">Modifier</button>
+            <button class="btn-admin-danger" (click)="supprimer(d)">Supprimer</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #vide>
+    <p class="admin-empty" *ngIf="!chargement">Aucune direction pour l'instant.</p>
+  </ng-template>
+</div>
+
+<div class="admin-modal-overlay" *ngIf="modalOuvert" (click)="fermer()">
+  <div class="admin-modal" (click)="$event.stopPropagation()">
+    <h2>{{ edition ? 'Modifier la direction' : 'Nouvelle direction' }}</h2>
+    <div class="admin-alert admin-alert-error" *ngIf="erreur">{{ erreur }}</div>
+    <form [formGroup]="form" (ngSubmit)="enregistrer()">
+      <div class="admin-field"><label>Nom (français)</label><input type="text" formControlName="nom"></div>
+      <div class="admin-field"><label>Sous-titre (français)</label><input type="text" formControlName="sous_titre"></div>
+      <div class="admin-field"><label>Description (français)</label><textarea rows="3" formControlName="description"></textarea></div>
+      <div class="admin-field"><label>Nom (anglais) — optionnel</label><input type="text" formControlName="nom_en"></div>
+      <div class="admin-field"><label>Sous-titre (anglais) — optionnel</label><input type="text" formControlName="sous_titre_en"></div>
+      <div class="admin-field">
+        <label>Description (anglais) — optionnel</label>
+        <textarea rows="3" formControlName="description_en"></textarea>
+      </div>
+      <div class="admin-field"><label>Ordre d'affichage</label><input type="number" formControlName="ordre"></div>
+      <div class="admin-modal-actions">
+        <button type="button" class="btn-admin-ghost" (click)="fermer()">Annuler</button>
+        <button type="submit" class="btn-admin" [disabled]="enregistrement">{{ enregistrement ? 'Enregistrement...' : 'Enregistrer' }}</button>
+      </div>
+    </form>
+  </div>
+</div>

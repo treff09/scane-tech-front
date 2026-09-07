@@ -1,0 +1,67 @@
+<section class="section contact-block">
+  <div class="container">
+    <div class="section-head" appReveal>
+      <span class="eyebrow">{{ 'section.contact.eyebrow' | t }}</span>
+      <h2>{{ 'section.contact.title' | t }}</h2>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card" appReveal>
+        <strong>{{ 'contact.adresse.label' | t }}</strong>
+        <span>{{ 'contact.adresse.valeur' | t }}</span>
+      </div>
+      <div class="info-card" appReveal>
+        <strong>{{ 'contact.telephone.label' | t }}</strong>
+        <span>+225 27 21 75 85 40 · +225 07 78 84 66 78</span>
+      </div>
+      <div class="info-card" appReveal>
+        <strong>{{ 'contact.email.label' | t }}</strong>
+        <span>info&#64;scane-tech.com</span>
+      </div>
+    </div>
+
+    <div class="map-frame" appReveal>
+      <iframe
+        [src]="mapUrl"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+
+    <form class="form" appReveal [formGroup]="form" (ngSubmit)="envoyer()">
+      <div class="form-row">
+        <div class="field">
+          <label>{{ 'contact.form.nom' | t }}</label>
+          <input type="text" formControlName="nom" [placeholder]="'contact.form.nom.placeholder' | t">
+        </div>
+        <div class="field">
+          <label>{{ 'contact.email.label' | t }}</label>
+          <input type="email" formControlName="email" [placeholder]="'contact.form.email.placeholder' | t">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label>{{ 'contact.form.telephone' | t }}</label>
+          <input type="tel" formControlName="telephone" [placeholder]="'contact.form.telephone.placeholder' | t">
+        </div>
+        <div class="field">
+          <label>{{ 'contact.form.sujet' | t }}</label>
+          <input type="text" formControlName="sujet" [placeholder]="'contact.form.sujet.placeholder' | t">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>{{ 'contact.form.message' | t }}</label>
+        <textarea rows="5" formControlName="message" [placeholder]="'contact.form.message.placeholder' | t"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-orange" style="width:100%;justify-content:center" [disabled]="envoiEnCours">
+        {{ (envoiEnCours ? 'contact.form.envoi' : 'contact.form.envoyer') | t }}
+      </button>
+
+      <p class="feedback success" *ngIf="envoiReussi">{{ 'contact.form.succes' | t }}</p>
+      <p class="feedback error" *ngIf="envoiEchoue">{{ 'contact.form.erreur' | t }}</p>
+    </form>
+  </div>
+</section>

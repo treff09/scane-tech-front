@@ -1,0 +1,46 @@
+.msg-list { display: flex; flex-direction: column; gap: 10px; }
+
+.msg-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px 18px;
+  cursor: pointer;
+}
+.msg-card.non-traite { border-left: 3px solid var(--orange); }
+
+.msg-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.msg-info { display: flex; flex-direction: column; gap: 2px; }
+.msg-info strong { font-size: 0.92rem; }
+.msg-sujet { font-size: 0.8rem; color: var(--gray); }
+
+.msg-meta { display: flex; align-items: center; gap: 12px; }
+.msg-date { font-size: 0.75rem; color: var(--gray); }
+
+.msg-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--orange-light);
+  color: #8a4d0a;
+}
+.msg-badge.traite { background: #e6f4ea; color: #1e7d34; }
+
+.msg-detail {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+}
+.msg-detail p { margin: 0 0 8px; color: var(--ink); }
+.msg-body { white-space: pre-line; background: var(--bg); padding: 12px; border-radius: 6px; }
+
+.msg-actions { display: flex; gap: 10px; margin-top: 12px; }

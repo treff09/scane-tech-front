@@ -1,0 +1,55 @@
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--green-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: splashOut 0.7s ease forwards;
+  animation-delay: 1.5s;
+}
+
+.splash::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, rgba(140, 198, 63, 0.16), transparent 60%);
+}
+
+.splash-logo {
+  width: 240px;
+  max-width: 65vw;
+  position: relative;
+  opacity: 0;
+  transform: scale(0.8);
+  filter: brightness(0) invert(1);
+  animation: splashLogoIn 0.9s cubic-bezier(.22,.9,.36,1) forwards 0.15s;
+}
+
+.splash-bar {
+  position: absolute;
+  bottom: 38%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--orange);
+  animation: splashBar 0.7s ease forwards 1s;
+}
+
+@keyframes splashLogoIn {
+  0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+  60% { opacity: 1; transform: scale(1.03) translateY(0); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes splashBar {
+  from { width: 0; }
+  to { width: 130px; }
+}
+
+@keyframes splashOut {
+  from { opacity: 1; visibility: visible; }
+  to { opacity: 0; visibility: hidden; }
+}

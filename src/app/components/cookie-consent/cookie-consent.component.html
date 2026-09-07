@@ -1,0 +1,98 @@
+<div class="cookie-overlay" *ngIf="visible" role="dialog" aria-label="Preferences cookies">
+  <div class="cookie-panel">
+
+    <p class="cookie-intro">
+      {{ 'cookies.intro' | t }}
+      <br><br>
+      {{ 'cookies.savoirplus' | t }}
+      <a routerLink="/contact"><strong>{{ 'cookies.politique' | t }}</strong></a>
+    </p>
+
+    <div class="cookie-main-actions">
+      <button class="btn-solid" (click)="toutAccepter()">{{ 'cookies.toutAccepter' | t }}</button>
+      <button class="btn-solid" (click)="toutRefuser()">{{ 'cookies.toutRefuser' | t }}</button>
+    </div>
+
+    <button class="btn-outline-toggle" (click)="toggleCustomize()">
+      {{ 'cookies.personnaliser' | t }}
+      <span class="chevron" [class.open]="personnaliserOuvert">⌄</span>
+    </button>
+
+    <div class="cookie-categories" *ngIf="personnaliserOuvert">
+
+      <!-- Informations sur les parametres disponibles -->
+      <div class="cat-row" (click)="toggleSection('infos')">
+        <span class="chevron small" [class.open]="ouvertes.infos">›</span>
+        <span class="cat-title">{{ 'cookies.infos.titre' | t }}</span>
+      </div>
+      <p class="cat-info-text" *ngIf="ouvertes.infos" [style.white-space]="'pre-line'">{{ 'cookies.infos.texte' | t }}</p>
+
+      <!-- Necessaires -->
+      <div class="cat-row" (click)="toggleSection('necessaires')">
+        <span class="chevron small" [class.open]="ouvertes.necessaires">›</span>
+        <span class="cat-title">{{ 'cookies.necessaires' | t }}</span>
+        <span class="cat-status">{{ 'cookies.necessaires.toujours' | t }}</span>
+      </div>
+      <p class="cat-info-text" *ngIf="ouvertes.necessaires">{{ 'cookies.necessaires.texte' | t }}</p>
+
+      <!-- Statistiques -->
+      <div class="cat-row" (click)="toggleSection('statistiques')">
+        <span class="chevron small" [class.open]="ouvertes.statistiques">›</span>
+        <span class="cat-title">{{ 'cookies.statistiques' | t }}</span>
+        <button
+          class="switch"
+          [class.on]="statistiques"
+          (click)="$event.stopPropagation(); statistiques = !statistiques"
+          [attr.aria-pressed]="statistiques">
+          <span class="knob"></span>
+        </button>
+      </div>
+      <div class="cat-info-block" *ngIf="ouvertes.statistiques">
+        <p class="cat-info-text">{{ 'cookies.statistiques.texte' | t }}</p>
+        <table class="cookie-table">
+          <thead>
+            <tr>
+              <th>{{ 'cookies.table.cookie' | t }}</th>
+              <th>{{ 'cookies.table.duree' | t }}</th>
+              <th>{{ 'cookies.table.description' | t }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>_ga</td>
+              <td>2 ans</td>
+              <td>Installé par Google Analytics pour enregistrer vos visites et mesurer l'audience du site de façon anonyme.</td>
+            </tr>
+            <tr>
+              <td>_gat</td>
+              <td>1 min</td>
+              <td>Installé par Google Analytics pour limiter la fréquence des requêtes sur les sites à fort trafic.</td>
+            </tr>
+            <tr>
+              <td>_gid</td>
+              <td>1 jour</td>
+              <td>Installé par Google Analytics pour stocker des informations sur la façon dont les visiteurs utilisent le site.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Publicitaires -->
+      <div class="cat-row" (click)="toggleSection('publicitaires')">
+        <span class="chevron small" [class.open]="ouvertes.publicitaires">›</span>
+        <span class="cat-title">{{ 'cookies.publicitaires' | t }}</span>
+        <button
+          class="switch"
+          [class.on]="publicitaires"
+          (click)="$event.stopPropagation(); publicitaires = !publicitaires"
+          [attr.aria-pressed]="publicitaires">
+          <span class="knob"></span>
+        </button>
+      </div>
+      <p class="cat-info-text" *ngIf="ouvertes.publicitaires">{{ 'cookies.publicitaires.texte' | t }}</p>
+
+      <button class="btn-solid full" (click)="sauvegarder()">{{ 'cookies.sauvegarder' | t }}</button>
+    </div>
+
+  </div>
+</div>

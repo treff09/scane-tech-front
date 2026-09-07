@@ -1,0 +1,190 @@
+.cookie-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(21, 61, 40, 0.45);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: overlayIn 0.3s ease both;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.cookie-panel {
+  background: #fff;
+  width: 100%;
+  max-width: 520px;
+  max-height: 88vh;
+  overflow-y: auto;
+  border-radius: 18px 18px 0 0;
+  padding: 26px 22px 30px;
+  box-shadow: 0 -10px 40px rgba(0,0,0,.2);
+  animation: panelIn 0.4s cubic-bezier(.22,.61,.36,1) both;
+}
+
+@media (min-width: 560px) {
+  .cookie-panel { border-radius: 18px; margin-bottom: 24px; }
+}
+
+@keyframes panelIn {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.cookie-intro {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--gray);
+  margin: 0 0 22px;
+}
+
+.cookie-intro a {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.cookie-main-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.btn-solid {
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 16px 14px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+.btn-solid:hover { filter: brightness(1.06); }
+.btn-solid.full { width: 100%; margin-top: 16px; }
+
+.btn-outline-toggle {
+  width: 100%;
+  background: transparent;
+  border: 1.5px solid var(--orange);
+  color: var(--orange);
+  border-radius: 8px;
+  padding: 16px 14px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.chevron {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  font-size: 1rem;
+}
+.chevron.open { transform: rotate(180deg); }
+.chevron.small { font-size: 1rem; color: var(--gray); transform: rotate(0deg); }
+.chevron.small.open { transform: rotate(90deg); }
+
+.cookie-categories {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: catIn 0.3s ease both;
+}
+
+@keyframes catIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cat-row {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.cat-title { flex: 1; font-size: 0.9rem; font-weight: 500; color: var(--ink); }
+
+.cat-status { font-size: 0.8rem; color: var(--gray); }
+
+.cat-info-text {
+  font-size: 0.82rem;
+  color: var(--gray);
+  line-height: 1.6;
+  margin: -4px 4px 0;
+  padding: 0 16px;
+}
+
+.cat-info-block {
+  margin: -4px 4px 0;
+  padding: 0 16px;
+}
+
+.cookie-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 0.78rem;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.cookie-table thead tr { background: var(--green-dark); }
+.cookie-table th {
+  color: #fff;
+  text-align: left;
+  padding: 8px 10px;
+  font-weight: 600;
+}
+
+.cookie-table td {
+  padding: 10px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.cookie-table tr:last-child td { border-bottom: none; }
+.cookie-table td:first-child { font-weight: 600; color: var(--ink); white-space: nowrap; }
+.cookie-table td:nth-child(2) { white-space: nowrap; color: var(--gray); }
+.cookie-table td:nth-child(3) { color: var(--gray); }
+
+.switch {
+  width: 42px; height: 24px;
+  border-radius: 12px;
+  background: #d8dcd9;
+  border: none;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+.switch.on { background: var(--orange); }
+
+.knob {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  transition: transform 0.2s ease;
+}
+.switch.on .knob { transform: translateX(18px); }

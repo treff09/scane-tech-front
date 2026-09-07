@@ -1,0 +1,48 @@
+<div class="admin-shell">
+  <aside class="admin-sidebar" [class.open]="menuMobileOuvert">
+    <div class="admin-brand">
+      <img src="assets/images/logo-scane-tech.png" alt="Scane-Tech">
+      <span>Administration</span>
+    </div>
+
+    <nav class="admin-nav">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="menuMobileOuvert = false">
+        <span>Tableau de bord</span>
+      </a>
+      <a routerLink="/admin/services" routerLinkActive="active" (click)="menuMobileOuvert = false">
+        <span>Services</span>
+      </a>
+      <a routerLink="/admin/valeurs" routerLinkActive="active" (click)="menuMobileOuvert = false">
+        <span>Valeurs</span>
+      </a>
+      <a routerLink="/admin/directions" routerLinkActive="active" (click)="menuMobileOuvert = false">
+        <span>Nos directions</span>
+      </a>
+      <a routerLink="/admin/realisations" routerLinkActive="active" (click)="menuMobileOuvert = false">
+        <span>Réalisations</span>
+      </a>
+      <a routerLink="/admin/clients" routerLinkActive="active" (click)="menuMobileOuvert = false">
+        <span>Logos clients</span>
+      </a>
+      <a routerLink="/admin/messages" routerLinkActive="active" (click)="menuMobileOuvert = false">
+        <span>Messages reçus</span>
+      </a>
+    </nav>
+
+    <div class="admin-sidebar-footer">
+      <a routerLink="/" class="admin-view-site">Voir le site public →</a>
+      <div class="admin-user">
+        <span>{{ auth.utilisateur()?.username }}</span>
+        <button (click)="deconnexion()">Déconnexion</button>
+      </div>
+    </div>
+  </aside>
+
+  <button class="admin-burger" (click)="menuMobileOuvert = !menuMobileOuvert" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <main class="admin-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -1,0 +1,37 @@
+<div class="topbar">
+  <div class="container topbar-inner">
+    <span>info&#64;scane-tech.com &nbsp;|&nbsp; +225 27 21 75 85 40</span>
+    <span>{{ 'topbar.horaires' | t }}</span>
+  </div>
+</div>
+
+<header class="navbar">
+  <div class="container navrow">
+    <a routerLink="/" class="logo-link">
+      <img
+        src="assets/images/logo-scane-tech.png"
+        alt="Scane-Tech"
+        [class.logo-pulse]="logoPulse">
+    </a>
+
+    <div class="navrow-actions">
+      <div class="lang-switch">
+        <button [class.active]="lang.lang() === 'fr'" (click)="lang.setLang('fr')">FR</button>
+        <button [class.active]="lang.lang() === 'en'" (click)="lang.setLang('en')">EN</button>
+      </div>
+      <a routerLink="/contact" class="navbtn">{{ 'nav.devis' | t }}</a>
+      <button class="burger" (click)="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="tabs" [class.open]="menuOuvert">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="menuOuvert = false">{{ 'nav.accueil' | t }}</a>
+    <a routerLink="/a-propos" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.apropos' | t }}</a>
+    <a routerLink="/services" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.services' | t }}</a>
+    <a routerLink="/nos-directions" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.directions' | t }}</a>
+    <a routerLink="/realisations" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.realisations' | t }}</a>
+    <a routerLink="/contact" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.contact' | t }}</a>
+  </nav>
+</header>

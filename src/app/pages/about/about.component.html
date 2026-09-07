@@ -1,0 +1,41 @@
+<section class="section">
+  <div class="container">
+    <div class="section-head" appReveal>
+      <span class="eyebrow">{{ 'section.apropos.eyebrow' | t }}</span>
+      <h2>{{ 'section.apropos.title' | t }}</h2>
+    </div>
+    <div class="facade-frame" appReveal>
+      <video
+        *ngIf="videoLancee"
+        [src]="videoSrc"
+        controls
+        autoplay
+        playsinline>
+      </video>
+      <ng-container *ngIf="!videoLancee">
+        <img src="assets/images/facade-scane-tech.jpeg" alt="Agence Scane-Tech à Marcory">
+        <button class="play-btn" (click)="lancerVideo()" aria-label="Lire la vidéo de présentation">
+          <span class="play-icon">▶</span>
+        </button>
+      </ng-container>
+    </div>
+    <p appReveal class="lead">{{ 'apropos.texte' | t }}</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="section">
+  <div class="container">
+    <div class="section-head" appReveal>
+      <span class="eyebrow">{{ 'section.valeurs.eyebrow' | t }}</span>
+      <h2>{{ 'section.valeurs.title' | t }}</h2>
+    </div>
+    <div class="valeurs-grid">
+      <div class="valeur-card" appReveal *ngFor="let v of valeurs">
+        <span class="t">{{ v.titre | bilingual:v.titre_en }}</span>
+        <span class="d">{{ v.description | bilingual:v.description_en }}</span>
+      </div>
+    </div>
+  </div>
+</section>

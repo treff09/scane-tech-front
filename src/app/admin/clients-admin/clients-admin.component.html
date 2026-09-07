@@ -1,0 +1,54 @@
+<div class="admin-header">
+  <div>
+    <h1>Logos clients</h1>
+    <p>Affichés dans "Ils nous ont fait confiance".</p>
+  </div>
+  <button class="btn-admin" (click)="ouvrirCreation()">+ Ajouter un client</button>
+</div>
+
+<div class="admin-table-wrap">
+  <table class="admin-table" *ngIf="items.length; else vide">
+    <thead><tr><th>Logo</th><th>Nom</th><th>Ordre</th><th></th></tr></thead>
+    <tbody>
+      <tr *ngFor="let c of items">
+        <td><img [src]="c.logo" class="thumb"></td>
+        <td>{{ c.nom }}</td>
+        <td>{{ c.ordre }}</td>
+        <td>
+          <div class="admin-actions">
+            <button class="btn-admin-ghost" (click)="ouvrirEdition(c)">Modifier</button>
+            <button class="btn-admin-danger" (click)="supprimer(c)">Supprimer</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #vide>
+    <p class="admin-empty" *ngIf="!chargement">Aucun logo pour l'instant.</p>
+  </ng-template>
+</div>
+
+<div class="admin-modal-overlay" *ngIf="modalOuvert" (click)="fermer()">
+  <div class="admin-modal" (click)="$event.stopPropagation()">
+    <h2>{{ edition ? 'Modifier le client' : 'Nouveau client' }}</h2>
+    <div class="admin-alert admin-alert-error" *ngIf="erreur">{{ erreur }}</div>
+    <form [formGroup]="form" (ngSubmit)="enregistrer()">
+      <div class="admin-field"><label>Nom du client</label><input type="text" formControlName="nom"></div>
+      <div class="admin-field"><label>Ordre d'affichage</label><input type="number" formControlName="ordre"></div>
+
+      <div class="admin-field">
+        <label>Logo</label>
+        <div class="admin-current-image" *ngIf="edition?.logo">
+          <img [src]="edition!.logo" alt="">
+          <span class="admin-field-hint">Logo actuel — choisis un fichier pour le remplacer</span>
+        </div>
+        <input type="file" accept="image/*" (change)="onFichier($event)">
+      </div>
+
+      <div class="admin-modal-actions">
+        <button type="button" class="btn-admin-ghost" (click)="fermer()">Annuler</button>
+        <button type="submit" class="btn-admin" [disabled]="enregistrement">{{ enregistrement ? 'Enregistrement...' : 'Enregistrer' }}</button>
+      </div>
+    </form>
+  </div>
+</div>

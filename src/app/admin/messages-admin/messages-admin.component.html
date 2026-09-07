@@ -1,0 +1,37 @@
+<div class="admin-header">
+  <div>
+    <h1>Messages reçus</h1>
+    <p>Envoyés via le formulaire de contact du site.</p>
+  </div>
+</div>
+
+<div class="msg-list" *ngIf="items.length; else vide">
+  <div class="msg-card" *ngFor="let m of items" [class.non-traite]="!m.traite" (click)="toggleOuvert(m.id)">
+    <div class="msg-row">
+      <div class="msg-info">
+        <strong>{{ m.nom }}</strong>
+        <span class="msg-sujet">{{ m.sujet || '(sans sujet)' }}</span>
+      </div>
+      <div class="msg-meta">
+        <span class="msg-date">{{ m.date_envoi | date:'dd/MM/yyyy HH:mm' }}</span>
+        <span class="msg-badge" [class.traite]="m.traite">{{ m.traite ? 'Traité' : 'Non traité' }}</span>
+      </div>
+    </div>
+
+    <div class="msg-detail" *ngIf="ouvert === m.id">
+      <p><strong>Email :</strong> {{ m.email }}</p>
+      <p *ngIf="m.telephone"><strong>Téléphone :</strong> {{ m.telephone }}</p>
+      <p class="msg-body">{{ m.message }}</p>
+      <div class="msg-actions">
+        <button class="btn-admin-ghost" (click)="marquerTraite(m, $event)">
+          {{ m.traite ? 'Marquer non traité' : 'Marquer comme traité' }}
+        </button>
+        <button class="btn-admin-danger" (click)="supprimer(m, $event)">Supprimer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #vide>
+  <p class="admin-empty" *ngIf="!chargement">Aucun message reçu pour l'instant.</p>
+</ng-template>

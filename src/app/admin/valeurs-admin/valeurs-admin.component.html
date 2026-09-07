@@ -1,0 +1,50 @@
+<div class="admin-header">
+  <div>
+    <h1>Valeurs de l'entreprise</h1>
+    <p>Ce qui apparaît dans la section "Ce qui nous guide".</p>
+  </div>
+  <button class="btn-admin" (click)="ouvrirCreation()">+ Ajouter une valeur</button>
+</div>
+
+<div class="admin-table-wrap">
+  <table class="admin-table" *ngIf="items.length; else vide">
+    <thead><tr><th>Ordre</th><th>Titre</th><th>Description</th><th></th></tr></thead>
+    <tbody>
+      <tr *ngFor="let v of items">
+        <td>{{ v.ordre }}</td>
+        <td>{{ v.titre }}</td>
+        <td>{{ v.description | slice:0:70 }}{{ v.description.length > 70 ? '…' : '' }}</td>
+        <td>
+          <div class="admin-actions">
+            <button class="btn-admin-ghost" (click)="ouvrirEdition(v)">Modifier</button>
+            <button class="btn-admin-danger" (click)="supprimer(v)">Supprimer</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #vide>
+    <p class="admin-empty" *ngIf="!chargement">Aucune valeur pour l'instant.</p>
+  </ng-template>
+</div>
+
+<div class="admin-modal-overlay" *ngIf="modalOuvert" (click)="fermer()">
+  <div class="admin-modal" (click)="$event.stopPropagation()">
+    <h2>{{ edition ? 'Modifier la valeur' : 'Nouvelle valeur' }}</h2>
+    <div class="admin-alert admin-alert-error" *ngIf="erreur">{{ erreur }}</div>
+    <form [formGroup]="form" (ngSubmit)="enregistrer()">
+      <div class="admin-field"><label>Titre (français)</label><input type="text" formControlName="titre"></div>
+      <div class="admin-field"><label>Description (français)</label><textarea rows="2" formControlName="description"></textarea></div>
+      <div class="admin-field"><label>Titre (anglais) — optionnel</label><input type="text" formControlName="titre_en"></div>
+      <div class="admin-field">
+        <label>Description (anglais) — optionnel</label>
+        <textarea rows="2" formControlName="description_en"></textarea>
+      </div>
+      <div class="admin-field"><label>Ordre d'affichage</label><input type="number" formControlName="ordre"></div>
+      <div class="admin-modal-actions">
+        <button type="button" class="btn-admin-ghost" (click)="fermer()">Annuler</button>
+        <button type="submit" class="btn-admin" [disabled]="enregistrement">{{ enregistrement ? 'Enregistrement...' : 'Enregistrer' }}</button>
+      </div>
+    </form>
+  </div>
+</div>

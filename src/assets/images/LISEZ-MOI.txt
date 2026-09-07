@@ -1,0 +1,23 @@
+Les vraies images de Scane-Tech sont maintenant incluses dans ce dossier :
+
+- logo-scane-tech.png     (logo officiel, vert/orange)
+- facade-scane-tech.jpeg  (photo de la façade de l'agence à Marcory)
+- cgrae.png               (logo client CGRAE)
+- univelect.png           (logo client Univelect)
+- presentation-scane-tech.mp4    (video de presentation en francais)
+- presentation-scane-tech-en.mp4 (version anglaise -- POUR L'INSTANT C'EST
+                                   UNE COPIE DE LA VIDEO FRANCAISE, a
+                                   remplacer par ta vraie video en anglais
+                                   des que tu l'auras. Meme nom de fichier,
+                                   rien d'autre a changer dans le code.)
+
+Quand la langue EN est selectionnee sur le site, la page "A propos" joue
+automatiquement presentation-scane-tech-en.mp4 au lieu de la version
+francaise.
+
+Rien à faire de plus ici, elles sont deja reference es dans les composants
+Angular (home, about, realisations, footer).
+
+Si tu ajoutes de nouvelles photos de realisations plus tard, uploade-les
+via l'admin Django (/admin/) sur le modele Realisation plutot que dans ce
+dossier statique.

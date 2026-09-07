@@ -1,0 +1,26 @@
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <img src="assets/images/logo-scane-tech.png" alt="Scane-Tech" class="footer-logo">
+      <p [innerHTML]="'footer.adresse' | t"></p>
+    </div>
+
+    <div>
+      <h4>{{ 'footer.liens' | t }}</h4>
+      <a routerLink="/">{{ 'nav.accueil' | t }}</a>
+      <a routerLink="/a-propos">{{ 'nav.apropos' | t }}</a>
+      <a routerLink="/services">{{ 'nav.services' | t }}</a>
+      <a routerLink="/realisations">{{ 'nav.realisations' | t }}</a>
+    </div>
+
+    <div>
+      <h4>{{ 'footer.contact' | t }}</h4>
+      <a href="mailto:info@scane-tech.com">info&#64;scane-tech.com</a>
+      <a href="tel:+2252721758540">+225 27 21 75 85 40</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">© {{ annee }} Scane-Tech. {{ 'footer.droits' | t }}</div>
+  </div>
+</footer>

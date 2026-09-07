@@ -1,0 +1,65 @@
+<div class="admin-header">
+  <div>
+    <h1>Réalisations</h1>
+    <p>Les projets terminés présentés sur le site.</p>
+  </div>
+  <button class="btn-admin" (click)="ouvrirCreation()">+ Ajouter une réalisation</button>
+</div>
+
+<div class="admin-table-wrap">
+  <table class="admin-table" *ngIf="items.length; else vide">
+    <thead><tr><th>Photo</th><th>Titre</th><th>Client</th><th>Date</th><th></th></tr></thead>
+    <tbody>
+      <tr *ngFor="let r of items">
+        <td><img *ngIf="r.image" [src]="r.image" class="thumb"></td>
+        <td>{{ r.titre }}</td>
+        <td>{{ r.client }}</td>
+        <td>{{ r.date }}</td>
+        <td>
+          <div class="admin-actions">
+            <button class="btn-admin-ghost" (click)="ouvrirEdition(r)">Modifier</button>
+            <button class="btn-admin-danger" (click)="supprimer(r)">Supprimer</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #vide>
+    <p class="admin-empty" *ngIf="!chargement">Aucune réalisation pour l'instant.</p>
+  </ng-template>
+</div>
+
+<div class="admin-modal-overlay" *ngIf="modalOuvert" (click)="fermer()">
+  <div class="admin-modal" (click)="$event.stopPropagation()">
+    <h2>{{ edition ? 'Modifier la réalisation' : 'Nouvelle réalisation' }}</h2>
+    <div class="admin-alert admin-alert-error" *ngIf="erreur">{{ erreur }}</div>
+    <form [formGroup]="form" (ngSubmit)="enregistrer()">
+      <div class="admin-field"><label>Titre (français)</label><input type="text" formControlName="titre"></div>
+      <div class="admin-field"><label>Client</label><input type="text" formControlName="client"></div>
+      <div class="admin-field"><label>Description (français)</label><textarea rows="3" formControlName="description"></textarea></div>
+      <div class="admin-field"><label>Titre (anglais) — optionnel</label><input type="text" formControlName="titre_en"></div>
+      <div class="admin-field">
+        <label>Description (anglais) — optionnel</label>
+        <textarea rows="3" formControlName="description_en"></textarea>
+      </div>
+      <div class="admin-field-row">
+        <div class="admin-field"><label>Date</label><input type="date" formControlName="date"></div>
+        <div class="admin-field"><label>Ordre</label><input type="number" formControlName="ordre"></div>
+      </div>
+
+      <div class="admin-field">
+        <label>Photo</label>
+        <div class="admin-current-image" *ngIf="edition?.image">
+          <img [src]="edition!.image!" alt="">
+          <span class="admin-field-hint">Photo actuelle — choisis un fichier pour la remplacer</span>
+        </div>
+        <input type="file" accept="image/*" (change)="onFichier($event)">
+      </div>
+
+      <div class="admin-modal-actions">
+        <button type="button" class="btn-admin-ghost" (click)="fermer()">Annuler</button>
+        <button type="submit" class="btn-admin" [disabled]="enregistrement">{{ enregistrement ? 'Enregistrement...' : 'Enregistrer' }}</button>
+      </div>
+    </form>
+  </div>
+</div>

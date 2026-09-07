@@ -1,0 +1,21 @@
+<div class="admin-header">
+  <div>
+    <h1>Tableau de bord</h1>
+    <p>Gère le contenu affiché sur le site scane-tech.com</p>
+  </div>
+</div>
+
+<div class="dash-alert" *ngIf="messagesNonTraites > 0">
+  Vous avez <strong>{{ messagesNonTraites }}</strong> message(s) non traité(s).
+  <a routerLink="/admin/messages">Voir les messages →</a>
+</div>
+
+<div class="dash-grid">
+  <a class="dash-card" *ngFor="let c of cartes" [routerLink]="c.lien">
+    <div class="dash-icon">{{ c.icone }}</div>
+    <div>
+      <strong>{{ c.compte }}</strong>
+      <span>{{ c.titre }}</span>
+    </div>
+  </a>
+</div>
