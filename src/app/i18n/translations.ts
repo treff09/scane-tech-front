@@ -69,7 +69,7 @@ export const TRANSLATIONS: Record<Lang, Record<string, string>> = {
     'direction.qhse.description': "Supervise la qualité de travail, la sécurité des personnes et des biens, et le respect de l'environnement.",
 
     // Realisations
-    'realisations.note': "Cette section sera enrichie avec vos projets terminés (photos, client, date) — gérable directement depuis l'interface d'administration",
+    'realisations.note': "Cette section sera enrichie avec vos projets terminés (photos, client, date) — gérable directement depuis l'admin Django, sans toucher au code.",
 
     // Contact
     'contact.adresse.label': 'Adresse',

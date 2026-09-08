@@ -13,7 +13,7 @@
 <section class="section">
   <div class="container">
     <div class="services-grid">
-      <div class="service-card" appReveal *ngFor="let s of services; let i = index">
+      <div class="service-card" appReveal [class.reveal-left]="i % 2 === 0" [class.reveal-right]="i % 2 !== 0" *ngFor="let s of services; let i = index">
         <div class="service-icon" [class.alt]="i === 1">
           <span [ngSwitch]="s.icone">
             <span *ngSwitchCase="'bolt'">⚡</span>

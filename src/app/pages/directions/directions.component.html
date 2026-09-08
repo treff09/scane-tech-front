@@ -1,21 +1,25 @@
-<section class="section">
+<section class="section dir-section">
   <div class="container">
     <div class="section-head" appReveal>
       <span class="eyebrow">{{ 'section.directions.eyebrow' | t }}</span>
       <h2>{{ 'section.directions.title' | t }}</h2>
     </div>
-  </div>
-</section>
 
-<hr class="divider">
-
-<section class="section">
-  <div class="container">
     <div class="dir-timeline">
-      <div class="dir-block" appReveal *ngFor="let d of directions">
-        <h3>{{ d.nom | bilingual:d.nom_en }}</h3>
-        <div class="sub" *ngIf="d.sous_titre">{{ d.sous_titre | bilingual:d.sous_titre_en }}</div>
-        <p>{{ d.description | bilingual:d.description_en }}</p>
+      <div class="dir-block" *ngFor="let d of directions; let i = index">
+        <div class="dir-marker reveal-pop" appReveal [revealDelay]="i * 3000">
+          <span>{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}</span>
+        </div>
+        <div
+          class="dir-content"
+          appReveal
+          [class.reveal-left]="i % 2 === 0"
+          [class.reveal-right]="i % 2 !== 0"
+          [revealDelay]="i * 3000 + 250">
+          <h3>{{ d.nom | bilingual:d.nom_en }}</h3>
+          <div class="sub" *ngIf="d.sous_titre">{{ d.sous_titre | bilingual:d.sous_titre_en }}</div>
+          <p>{{ d.description | bilingual:d.description_en }}</p>
+        </div>
       </div>
     </div>
   </div>

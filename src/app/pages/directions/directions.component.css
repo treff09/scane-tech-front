@@ -1,30 +1,50 @@
+.dir-section .section-head { margin-bottom: 40px; }
+
 .dir-timeline {
-  position: relative;
-  padding-left: 32px;
-  max-width: 760px;
-}
-.dir-timeline::before {
-  content: '';
-  position: absolute;
-  left: 7px; top: 6px; bottom: 6px;
-  width: 2px;
-  background: var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  max-width: 780px;
 }
 
-.dir-block { position: relative; padding-bottom: 40px; }
-.dir-block:last-child { padding-bottom: 0; }
-.dir-block::before {
-  content: '';
-  position: absolute;
-  left: -32px; top: 4px;
-  width: 14px; height: 14px;
+.dir-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+.dir-marker {
+  flex-shrink: 0;
+  width: 52px; height: 52px;
   border-radius: 50%;
-  background: var(--orange);
-  border: 3px solid var(--orange-light);
+  background: var(--green-dark);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.1rem;
+  box-shadow: 0 10px 24px rgba(21,61,40,.25);
+  transition-duration: 1s;
 }
 
-.dir-block h3 { font-size: 1.15rem; margin-bottom: 6px; }
-.dir-block .sub {
+.dir-block:nth-child(even) .dir-marker { background: var(--orange); box-shadow: 0 10px 24px rgba(240,144,15,.28); }
+
+.dir-content {
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px 26px;
+  flex: 1;
+  transition: opacity 1.2s cubic-bezier(.22,.61,.36,1), transform 1.2s cubic-bezier(.22,.61,.36,1), box-shadow 0.25s ease;
+}
+.dir-content:hover {
+  box-shadow: 0 16px 32px rgba(21,61,40,.1);
+}
+
+.dir-content h3 { font-size: 1.15rem; margin-bottom: 6px; }
+.dir-content .sub {
   font-size: 0.8rem;
   color: var(--orange);
   font-weight: 700;
@@ -32,4 +52,10 @@
   letter-spacing: 0.4px;
   margin-bottom: 10px;
 }
-.dir-block p { font-size: 0.92rem; margin: 0; }
+.dir-content p { font-size: 0.92rem; margin: 0; }
+
+@media (max-width: 640px) {
+  .dir-block { gap: 14px; }
+  .dir-marker { width: 42px; height: 42px; font-size: 0.95rem; }
+  .dir-content { padding: 18px; }
+}

@@ -32,7 +32,7 @@
       <h2>{{ 'section.valeurs.title' | t }}</h2>
     </div>
     <div class="valeurs-grid">
-      <div class="valeur-card" appReveal *ngFor="let v of valeurs">
+      <div class="valeur-card" appReveal [class.reveal-left]="i % 2 === 0" [class.reveal-right]="i % 2 !== 0" *ngFor="let v of valeurs; let i = index">
         <span class="t">{{ v.titre | bilingual:v.titre_en }}</span>
         <span class="d">{{ v.description | bilingual:v.description_en }}</span>
       </div>
