@@ -1,0 +1,25 @@
+<div class="pagination-bar" *ngIf="depasseLaLimite">
+  <div class="pagination-pages" *ngIf="!afficherTout">
+    <button
+      class="page-btn"
+      [disabled]="page === 1"
+      (click)="allerPage(page - 1)"
+      aria-label="Page précédente">‹</button>
+
+    <button
+      class="page-btn"
+      *ngFor="let p of pages"
+      [class.active]="p === page"
+      (click)="allerPage(p)">{{ p }}</button>
+
+    <button
+      class="page-btn"
+      [disabled]="page === nbPages"
+      (click)="allerPage(page + 1)"
+      aria-label="Page suivante">›</button>
+  </div>
+
+  <button class="toggle-all" (click)="toggleAfficherTout()">
+    {{ afficherTout ? 'Revenir à la pagination' : 'Afficher tout (' + totalItems + ')' }}
+  </button>
+</div>

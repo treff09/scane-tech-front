@@ -6,7 +6,7 @@
 </div>
 
 <div class="msg-list" *ngIf="items.length; else vide">
-  <div class="msg-card" *ngFor="let m of items" [class.non-traite]="!m.traite" (click)="toggleOuvert(m.id)">
+  <div class="msg-card" *ngFor="let m of itemsAffiches" [class.non-traite]="!m.traite" (click)="toggleOuvert(m.id)">
     <div class="msg-row">
       <div class="msg-info">
         <strong>{{ m.nom }}</strong>
@@ -32,6 +32,20 @@
   </div>
 </div>
 
+<app-pagination
+  [totalItems]="items.length"
+  [(page)]="page"
+  [(afficherTout)]="afficherTout">
+</app-pagination>
+
 <ng-template #vide>
   <p class="admin-empty" *ngIf="!chargement">Aucun message reçu pour l'instant.</p>
 </ng-template>
+
+<app-confirm-dialog
+  [visible]="confirmSuppressionOuvert"
+  [message]="'Supprimer le message de « ' + (itemASupprimer?.nom || '') + ' » ? Cette action est définitive.'"
+  [enCours]="suppressionEnCours"
+  (confirmer)="confirmerSuppression()"
+  (annuler)="fermerConfirmation()">
+</app-confirm-dialog>

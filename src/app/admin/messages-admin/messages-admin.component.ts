@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminApiService, MessageContactItem } from '../admin-api.service';
+import { PaginationComponent } from '../shared/pagination/pagination.component';
+import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-messages-admin',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PaginationComponent, ConfirmDialogComponent],
   templateUrl: './messages-admin.component.html',
   styleUrls: ['../shared/admin.css', './messages-admin.component.css'],
 })
@@ -13,6 +15,18 @@ export class MessagesAdminComponent implements OnInit {
   items: MessageContactItem[] = [];
   chargement = true;
   ouvert: number | null = null;
+  page = 1;
+  afficherTout = false;
+
+  confirmSuppressionOuvert = false;
+  itemASupprimer: MessageContactItem | null = null;
+  suppressionEnCours = false;
+
+  get itemsAffiches(): MessageContactItem[] {
+    if (this.afficherTout) return this.items;
+    const debut = (this.page - 1) * 5;
+    return this.items.slice(debut, debut + 5);
+  }
 
   constructor(private api: AdminApiService) {}
 
@@ -20,6 +34,7 @@ export class MessagesAdminComponent implements OnInit {
 
   charger(): void {
     this.chargement = true;
+    this.page = 1;
     this.api.listMessages().subscribe({
       next: (data) => { this.items = data; this.chargement = false; },
       error: () => { this.chargement = false; },
@@ -39,7 +54,22 @@ export class MessagesAdminComponent implements OnInit {
 
   supprimer(item: MessageContactItem, event: Event): void {
     event.stopPropagation();
-    if (!confirm('Supprimer ce message ?')) return;
-    this.api.deleteMessage(item.id).subscribe(() => this.charger());
+    this.itemASupprimer = item;
+    this.confirmSuppressionOuvert = true;
+  }
+
+  confirmerSuppression(): void {
+    if (!this.itemASupprimer) return;
+    this.suppressionEnCours = true;
+    this.api.deleteMessage(this.itemASupprimer.id).subscribe(() => {
+      this.suppressionEnCours = false;
+      this.fermerConfirmation();
+      this.charger();
+    });
+  }
+
+  fermerConfirmation(): void {
+    this.confirmSuppressionOuvert = false;
+    this.itemASupprimer = null;
   }
 }

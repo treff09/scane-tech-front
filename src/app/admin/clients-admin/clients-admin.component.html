@@ -10,7 +10,7 @@
   <table class="admin-table" *ngIf="items.length; else vide">
     <thead><tr><th>Logo</th><th>Nom</th><th>Ordre</th><th></th></tr></thead>
     <tbody>
-      <tr *ngFor="let c of items">
+      <tr *ngFor="let c of itemsAffiches">
         <td><img [src]="c.logo" class="thumb"></td>
         <td>{{ c.nom }}</td>
         <td>{{ c.ordre }}</td>
@@ -27,6 +27,12 @@
     <p class="admin-empty" *ngIf="!chargement">Aucun logo pour l'instant.</p>
   </ng-template>
 </div>
+
+<app-pagination
+  [totalItems]="items.length"
+  [(page)]="page"
+  [(afficherTout)]="afficherTout">
+</app-pagination>
 
 <div class="admin-modal-overlay" *ngIf="modalOuvert" (click)="fermer()">
   <div class="admin-modal" (click)="$event.stopPropagation()">
@@ -52,3 +58,11 @@
     </form>
   </div>
 </div>
+
+<app-confirm-dialog
+  [visible]="confirmSuppressionOuvert"
+  [message]="'Supprimer le logo « ' + (itemASupprimer?.nom || '') + ' » ? Cette action est définitive.'"
+  [enCours]="suppressionEnCours"
+  (confirmer)="confirmerSuppression()"
+  (annuler)="fermerConfirmation()">
+</app-confirm-dialog>

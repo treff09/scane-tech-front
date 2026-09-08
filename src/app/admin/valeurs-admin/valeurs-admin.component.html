@@ -10,7 +10,7 @@
   <table class="admin-table" *ngIf="items.length; else vide">
     <thead><tr><th>Ordre</th><th>Titre</th><th>Description</th><th></th></tr></thead>
     <tbody>
-      <tr *ngFor="let v of items">
+      <tr *ngFor="let v of itemsAffiches">
         <td>{{ v.ordre }}</td>
         <td>{{ v.titre }}</td>
         <td>{{ v.description | slice:0:70 }}{{ v.description.length > 70 ? '…' : '' }}</td>
@@ -27,6 +27,12 @@
     <p class="admin-empty" *ngIf="!chargement">Aucune valeur pour l'instant.</p>
   </ng-template>
 </div>
+
+<app-pagination
+  [totalItems]="items.length"
+  [(page)]="page"
+  [(afficherTout)]="afficherTout">
+</app-pagination>
 
 <div class="admin-modal-overlay" *ngIf="modalOuvert" (click)="fermer()">
   <div class="admin-modal" (click)="$event.stopPropagation()">
@@ -48,3 +54,11 @@
     </form>
   </div>
 </div>
+
+<app-confirm-dialog
+  [visible]="confirmSuppressionOuvert"
+  [message]="'Supprimer la valeur « ' + (itemASupprimer?.titre || '') + ' » ? Cette action est définitive.'"
+  [enCours]="suppressionEnCours"
+  (confirmer)="confirmerSuppression()"
+  (annuler)="fermerConfirmation()">
+</app-confirm-dialog>

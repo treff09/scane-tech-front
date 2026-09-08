@@ -12,7 +12,7 @@
       <tr><th>Ordre</th><th>Titre</th><th>Description</th><th></th></tr>
     </thead>
     <tbody>
-      <tr *ngFor="let s of items">
+      <tr *ngFor="let s of itemsAffiches">
         <td>{{ s.ordre }}</td>
         <td>{{ s.titre }}</td>
         <td>{{ s.description | slice:0:70 }}{{ s.description.length > 70 ? '…' : '' }}</td>
@@ -29,6 +29,12 @@
     <p class="admin-empty" *ngIf="!chargement">Aucun service pour l'instant.</p>
   </ng-template>
 </div>
+
+<app-pagination
+  [totalItems]="items.length"
+  [(page)]="page"
+  [(afficherTout)]="afficherTout">
+</app-pagination>
 
 <div class="admin-modal-overlay" *ngIf="modalOuvert" (click)="fermer()">
   <div class="admin-modal" (click)="$event.stopPropagation()">
@@ -78,3 +84,11 @@
     </form>
   </div>
 </div>
+
+<app-confirm-dialog
+  [visible]="confirmSuppressionOuvert"
+  [message]="'Supprimer le service « ' + (itemASupprimer?.titre || '') + ' » ? Cette action est définitive.'"
+  [enCours]="suppressionEnCours"
+  (confirmer)="confirmerSuppression()"
+  (annuler)="fermerConfirmation()">
+</app-confirm-dialog>

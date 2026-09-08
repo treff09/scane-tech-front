@@ -2,18 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminApiService } from '../admin-api.service';
+import { PaginationComponent } from '../shared/pagination/pagination.component';
+import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 import { ClientRefItem } from '../../services/api.service';
 
 @Component({
   selector: 'app-clients-admin',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, PaginationComponent, ConfirmDialogComponent],
   templateUrl: './clients-admin.component.html',
   styleUrls: ['../shared/admin.css'],
 })
 export class ClientsAdminComponent implements OnInit {
   items: ClientRefItem[] = [];
   chargement = true;
+  page = 1;
+  afficherTout = false;
+
+  confirmSuppressionOuvert = false;
+  itemASupprimer: ClientRefItem | null = null;
+  suppressionEnCours = false;
+
+  get itemsAffiches(): ClientRefItem[] {
+    if (this.afficherTout) return this.items;
+    const debut = (this.page - 1) * 5;
+    return this.items.slice(debut, debut + 5);
+  }
   modalOuvert = false;
   edition: ClientRefItem | null = null;
   form: FormGroup;
@@ -32,6 +46,7 @@ export class ClientsAdminComponent implements OnInit {
 
   charger(): void {
     this.chargement = true;
+    this.page = 1;
     this.api.listClients().subscribe({
       next: (data) => { this.items = data; this.chargement = false; },
       error: () => { this.chargement = false; },
@@ -87,7 +102,22 @@ export class ClientsAdminComponent implements OnInit {
   }
 
   supprimer(item: ClientRefItem): void {
-    if (!confirm(`Supprimer le logo "${item.nom}" ?`)) return;
-    this.api.deleteClient(item.id).subscribe(() => this.charger());
+    this.itemASupprimer = item;
+    this.confirmSuppressionOuvert = true;
+  }
+
+  confirmerSuppression(): void {
+    if (!this.itemASupprimer) return;
+    this.suppressionEnCours = true;
+    this.api.deleteClient(this.itemASupprimer.id).subscribe(() => {
+      this.suppressionEnCours = false;
+      this.fermerConfirmation();
+      this.charger();
+    });
+  }
+
+  fermerConfirmation(): void {
+    this.confirmSuppressionOuvert = false;
+    this.itemASupprimer = null;
   }
 }

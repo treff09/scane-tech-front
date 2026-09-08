@@ -2,18 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminApiService } from '../admin-api.service';
+import { PaginationComponent } from '../shared/pagination/pagination.component';
+import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 import { ServiceItem } from '../../services/api.service';
 
 @Component({
   selector: 'app-services-admin',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, PaginationComponent, ConfirmDialogComponent],
   templateUrl: './services-admin.component.html',
   styleUrls: ['./services-admin.component.css', '../shared/admin.css'],
 })
 export class ServicesAdminComponent implements OnInit {
   items: ServiceItem[] = [];
   chargement = true;
+  page = 1;
+  afficherTout = false;
+
+  confirmSuppressionOuvert = false;
+  itemASupprimer: ServiceItem | null = null;
+  suppressionEnCours = false;
+
+  get itemsAffiches(): ServiceItem[] {
+    if (this.afficherTout) return this.items;
+    const debut = (this.page - 1) * 5;
+    return this.items.slice(debut, debut + 5);
+  }
 
   modalOuvert = false;
   edition: ServiceItem | null = null;
@@ -38,6 +52,7 @@ export class ServicesAdminComponent implements OnInit {
 
   charger(): void {
     this.chargement = true;
+    this.page = 1;
     this.api.listServices().subscribe({
       next: (data) => { this.items = data; this.chargement = false; },
       error: () => { this.chargement = false; },
@@ -83,7 +98,22 @@ export class ServicesAdminComponent implements OnInit {
   }
 
   supprimer(item: ServiceItem): void {
-    if (!confirm(`Supprimer le service "${item.titre}" ?`)) return;
-    this.api.deleteService(item.id).subscribe(() => this.charger());
+    this.itemASupprimer = item;
+    this.confirmSuppressionOuvert = true;
+  }
+
+  confirmerSuppression(): void {
+    if (!this.itemASupprimer) return;
+    this.suppressionEnCours = true;
+    this.api.deleteService(this.itemASupprimer.id).subscribe(() => {
+      this.suppressionEnCours = false;
+      this.fermerConfirmation();
+      this.charger();
+    });
+  }
+
+  fermerConfirmation(): void {
+    this.confirmSuppressionOuvert = false;
+    this.itemASupprimer = null;
   }
 }

@@ -2,18 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminApiService } from '../admin-api.service';
+import { PaginationComponent } from '../shared/pagination/pagination.component';
+import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 import { DirectionItem } from '../../services/api.service';
 
 @Component({
   selector: 'app-directions-admin',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, PaginationComponent, ConfirmDialogComponent],
   templateUrl: './directions-admin.component.html',
   styleUrls: ['../shared/admin.css'],
 })
 export class DirectionsAdminComponent implements OnInit {
   items: DirectionItem[] = [];
   chargement = true;
+  page = 1;
+  afficherTout = false;
+
+  confirmSuppressionOuvert = false;
+  itemASupprimer: DirectionItem | null = null;
+  suppressionEnCours = false;
+
+  get itemsAffiches(): DirectionItem[] {
+    if (this.afficherTout) return this.items;
+    const debut = (this.page - 1) * 5;
+    return this.items.slice(debut, debut + 5);
+  }
   modalOuvert = false;
   edition: DirectionItem | null = null;
   form: FormGroup;
@@ -36,6 +50,7 @@ export class DirectionsAdminComponent implements OnInit {
 
   charger(): void {
     this.chargement = true;
+    this.page = 1;
     this.api.listDirections().subscribe({
       next: (data) => { this.items = data; this.chargement = false; },
       error: () => { this.chargement = false; },
@@ -77,7 +92,22 @@ export class DirectionsAdminComponent implements OnInit {
   }
 
   supprimer(item: DirectionItem): void {
-    if (!confirm(`Supprimer "${item.nom}" ?`)) return;
-    this.api.deleteDirection(item.id).subscribe(() => this.charger());
+    this.itemASupprimer = item;
+    this.confirmSuppressionOuvert = true;
+  }
+
+  confirmerSuppression(): void {
+    if (!this.itemASupprimer) return;
+    this.suppressionEnCours = true;
+    this.api.deleteDirection(this.itemASupprimer.id).subscribe(() => {
+      this.suppressionEnCours = false;
+      this.fermerConfirmation();
+      this.charger();
+    });
+  }
+
+  fermerConfirmation(): void {
+    this.confirmSuppressionOuvert = false;
+    this.itemASupprimer = null;
   }
 }
