@@ -1,17 +1,21 @@
 <section class="hero">
-  <div class="hero-bg" style="background-image:url('assets/images/facade-scane-tech.jpeg')"></div>
+  <div class="hero-bg" #heroBg>
+    <div class="hero-bg-img" style="background-image:url('assets/images/facade-scane-tech.jpeg')"></div>
+  </div>
   <div class="hero-scrim"></div>
   <div class="container hero-inner">
     <span class="eyebrow">{{ 'hero.eyebrow' | t }}</span>
-    <h1>{{ 'hero.title' | t }}</h1>
+    <h1>
+      <span class="word-cascade" *ngFor="let mot of titreMots; let i = index" [style.animation-delay.ms]="i * 90">{{ mot }}&nbsp;</span>
+    </h1>
     <p>{{ 'hero.text' | t }}</p>
     <div class="hero-actions">
       <a routerLink="/contact" class="btn btn-orange">{{ 'hero.cta.devis' | t }}</a>
       <a routerLink="/services" class="btn btn-line">{{ 'hero.cta.services' | t }}</a>
     </div>
     <div class="stripe">
-      <div><strong>2020</strong><span>{{ 'hero.stat.creation' | t }}</span></div>
-      <div><strong>03</strong><span>{{ 'hero.stat.domaines' | t }}</span></div>
+      <div><strong appCountUp [countTo]="2020">0</strong><span>{{ 'hero.stat.creation' | t }}</span></div>
+      <div><strong appCountUp [countTo]="3" [pad]="2">00</strong><span>{{ 'hero.stat.domaines' | t }}</span></div>
       <div><strong>QHSE</strong><span>{{ 'hero.stat.qhse' | t }}</span></div>
     </div>
   </div>
@@ -26,7 +30,7 @@
       <h2>{{ 'section.services.title' | t }}</h2>
     </div>
     <div class="services-grid">
-      <div class="service-card" appReveal [revealDelay]="0" *ngFor="let s of services; let i = index">
+      <div class="service-card" appReveal [revealDelay]="i * 100" *ngFor="let s of services; let i = index">
         <div class="service-icon" [class.alt]="i === 1">
           <span [ngSwitch]="s.icone">
             <span *ngSwitchCase="'bolt'">⚡</span>
@@ -52,9 +56,15 @@
       <span class="eyebrow">{{ 'section.references.eyebrow' | t }}</span>
       <h2>{{ 'section.references.title' | t }}</h2>
     </div>
-    <div class="client-strip" appReveal>
-      <div class="client-logo" *ngFor="let c of clients">
-        <img [src]="c.logo" [alt]="c.nom">
+    <div class="client-carousel" appReveal>
+      <div class="client-track">
+        <div class="client-logo" *ngFor="let c of clients">
+          <img [src]="c.logo" [alt]="c.nom">
+        </div>
+        <!-- Duplique la liste pour une boucle infinie sans coupure visible -->
+        <div class="client-logo" *ngFor="let c of clients" aria-hidden="true">
+          <img [src]="c.logo" [alt]="c.nom">
+        </div>
       </div>
     </div>
   </div>

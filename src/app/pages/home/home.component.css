@@ -4,14 +4,28 @@
   min-height: 480px;
   display: flex;
   align-items: flex-end;
+  overflow: hidden;
 }
 
 .hero-bg {
+  position: absolute;
+  inset: -60px 0 0 0;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.hero-bg-img {
   position: absolute;
   inset: 0;
   background-size: cover;
   background-position: center top;
   filter: brightness(0.8) saturate(0.85);
+  animation: kenBurns 18s ease-in-out infinite alternate;
+}
+
+@keyframes kenBurns {
+  from { transform: scale(1); }
+  to { transform: scale(1.12); }
 }
 
 .hero-scrim {
@@ -96,15 +110,35 @@
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   font-size: 1.3rem;
+  transition: transform 0.35s cubic-bezier(.34,1.56,.64,1), background 0.25s ease;
 }
 .service-icon.alt { background: var(--orange); }
+.service-card:hover .service-icon { transform: rotate(-8deg) scale(1.1); }
 
 .service-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
 .service-card p { font-size: 0.9rem; margin: 0; }
 
 .clients { background: var(--bg); }
 
-.client-strip { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px; }
+.client-carousel {
+  overflow: hidden;
+  margin-top: 10px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.client-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: clientScroll 22s linear infinite;
+}
+.client-carousel:hover .client-track { animation-play-state: paused; }
+
+@keyframes clientScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
 
 .client-logo {
   border: 1px solid var(--line);
@@ -113,6 +147,7 @@
   display: flex; align-items: center;
   height: 68px;
   border-radius: 10px;
+  flex-shrink: 0;
   transition: box-shadow 0.2s ease;
 }
 .client-logo:hover { box-shadow: 0 10px 24px rgba(21,61,40,.08); }

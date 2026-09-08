@@ -42,7 +42,7 @@ a { text-decoration: none; color: inherit; }
   padding: 0 22px;
 }
 
-.section { padding: 70px 0; }
+.section { padding: 90px 0; }
 
 .divider { border: none; border-top: 1px solid var(--line); margin: 0; }
 
@@ -103,4 +103,28 @@ a { text-decoration: none; color: inherit; }
 .reveal.in {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Variante "rideau" pour les photos : au lieu d'un simple fondu, l'image
+   se devoile de gauche a droite. A utiliser sur un conteneur d'image en
+   combinaison avec appReveal (ex: class="reveal-img" appReveal). */
+.reveal-img {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.9s cubic-bezier(.22,.61,.36,1);
+}
+.reveal-img.in {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Cascade mot-par-mot pour un effet "ecriture" sur les titres */
+.word-cascade {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: wordIn 0.65s cubic-bezier(.22,.61,.36,1) forwards;
+}
+@keyframes wordIn {
+  to { opacity: 1; transform: translateY(0); }
 }

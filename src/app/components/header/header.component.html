@@ -1,10 +1,16 @@
+<!-- Barre fine : coordonnees rapides -->
 <div class="topbar">
   <div class="container topbar-inner">
-    <span>info&#64;scane-tech.com &nbsp;|&nbsp; +225 27 21 75 85 40</span>
-    <span>{{ 'topbar.horaires' | t }}</span>
+    <div class="topbar-contact">
+      <a href="mailto:info@scane-tech.com">info&#64;scane-tech.com</a>
+      <span class="sep">•</span>
+      <a href="tel:+2252721758540">+225 27 21 75 85 40</a>
+    </div>
+    <div class="topbar-hours">{{ 'topbar.horaires' | t }}</div>
   </div>
 </div>
 
+<!-- Barre principale : logo + navigation + actions, tout sur une ligne -->
 <header class="navbar">
   <div class="container navrow">
     <a routerLink="/" class="logo-link">
@@ -13,6 +19,15 @@
         alt="Scane-Tech"
         [class.logo-pulse]="logoPulse">
     </a>
+
+    <nav class="tabs" [class.open]="menuOuvert">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="menuOuvert = false">{{ 'nav.accueil' | t }}</a>
+      <a routerLink="/a-propos" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.apropos' | t }}</a>
+      <a routerLink="/services" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.services' | t }}</a>
+      <a routerLink="/nos-directions" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.directions' | t }}</a>
+      <a routerLink="/realisations" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.realisations' | t }}</a>
+      <a routerLink="/contact" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.contact' | t }}</a>
+    </nav>
 
     <div class="navrow-actions">
       <div class="lang-switch">
@@ -25,13 +40,4 @@
       </button>
     </div>
   </div>
-
-  <nav class="tabs" [class.open]="menuOuvert">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="menuOuvert = false">{{ 'nav.accueil' | t }}</a>
-    <a routerLink="/a-propos" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.apropos' | t }}</a>
-    <a routerLink="/services" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.services' | t }}</a>
-    <a routerLink="/nos-directions" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.directions' | t }}</a>
-    <a routerLink="/realisations" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.realisations' | t }}</a>
-    <a routerLink="/contact" routerLinkActive="active" (click)="menuOuvert = false">{{ 'nav.contact' | t }}</a>
-  </nav>
 </header>

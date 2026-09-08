@@ -1,7 +1,8 @@
+/* --- Barre fine (coordonnees) --- */
 .topbar {
   background: var(--green-dark);
-  color: #a9c9b4;
-  font-size: 0.72rem;
+  color: #cfe6d8;
+  font-size: 0.74rem;
 }
 
 .topbar-inner {
@@ -13,11 +14,19 @@
   gap: 6px;
 }
 
+.topbar-contact { display: flex; align-items: center; gap: 8px; }
+.topbar-contact a { color: #cfe6d8; transition: color 0.15s ease; }
+.topbar-contact a:hover { color: #fff; }
+.topbar-contact .sep { color: rgba(255,255,255,0.35); }
+
+.topbar-hours { color: #a9c9b4; }
+
+/* --- Barre principale : logo + nav + actions sur une seule ligne --- */
 .navbar {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.97);
+  background: rgba(255,255,255,.97);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--line);
 }
@@ -26,85 +35,42 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
   padding: 12px 0;
-  gap: 12px;
 }
 
+.logo-link { flex-shrink: 0; }
 .logo-link img { height: 40px; display: block; }
 
 .logo-pulse { animation: logoPulse 0.6s ease; }
-
 @keyframes logoPulse {
   0% { opacity: 0; transform: scale(0.85) translateY(-4px); }
   60% { opacity: 1; transform: scale(1.06) translateY(0); }
   100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-.navrow-actions {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.lang-switch {
-  display: flex;
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.lang-switch button {
-  background: #fff;
-  border: none;
-  padding: 8px 12px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--gray);
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-
-.lang-switch button + button { border-left: 1px solid var(--line); }
-
-.lang-switch button.active {
-  background: var(--green-dark);
-  color: #fff;
-}
-
-.navbtn {
-  background: var(--orange);
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.82rem;
-  padding: 10px 20px;
-  border-radius: 5px;
-  box-shadow: 0 4px 12px rgba(240, 144, 15, 0.28);
-  transition: transform 0.18s ease;
-}
-.navbtn:hover { transform: translateY(-2px); }
 .tabs {
   display: flex;
   gap: 2px;
-  padding: 0 22px;
+  flex: 1;
   overflow-x: auto;
 }
 
 .tabs a {
   flex-shrink: 0;
-  padding: 12px 16px;
+  padding: 10px 14px;
   font-weight: 600;
   font-size: 0.85rem;
   color: var(--gray);
   position: relative;
   transition: color 0.2s ease;
+  white-space: nowrap;
 }
 
 .tabs a::after {
   content: '';
   position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 0;
+  left: 14px; right: 14px; bottom: 4px;
   height: 2px;
   background: var(--orange);
   transform: scaleX(0);
@@ -115,6 +81,44 @@
 .tabs a.active { color: var(--green-dark); }
 .tabs a.active::after { transform: scaleX(1); }
 
+.navrow-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.lang-switch {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.lang-switch button {
+  background: #fff;
+  border: none;
+  padding: 7px 11px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--gray);
+  cursor: pointer;
+}
+.lang-switch button + button { border-left: 1px solid var(--line); }
+.lang-switch button.active { background: var(--green-dark); color: #fff; }
+
+.navbtn {
+  background: var(--orange);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 10px 20px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(240, 144, 15, 0.28);
+  transition: transform 0.18s ease;
+  white-space: nowrap;
+}
+.navbtn:hover { transform: translateY(-2px); }
+
 .burger {
   display: none;
   flex-direction: column;
@@ -123,21 +127,23 @@
   border: none;
   cursor: pointer;
 }
-
-.burger span {
-  width: 24px;
-  height: 2px;
-  background: var(--green-dark);
-}
+.burger span { width: 22px; height: 2px; background: var(--green-dark); }
 
 @media (max-width: 900px) {
+  .topbar-hours { display: none; }
   .navrow .navbtn { display: none; }
-  .burger { display: flex; }  .tabs {
+  .burger { display: flex; }
+  .tabs {
     display: none;
     flex-direction: column;
-    padding: 10px 24px 16px;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    background: #fff;
+    padding: 10px 20px 16px;
+    box-shadow: 0 10px 20px rgba(0,0,0,.08);
   }
   .tabs.open { display: flex; }
   .tabs a::after { display: none; }
   .tabs a.active { color: var(--orange); }
+  .navrow { position: relative; }
 }

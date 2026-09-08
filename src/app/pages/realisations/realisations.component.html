@@ -4,9 +4,14 @@
       <span class="eyebrow">{{ 'section.references.eyebrow' | t }}</span>
       <h2>{{ 'section.references.title' | t }}</h2>
     </div>
-    <div class="client-strip" appReveal>
-      <div class="client-logo" *ngFor="let c of clients">
-        <img [src]="c.logo" [alt]="c.nom">
+    <div class="client-carousel" appReveal>
+      <div class="client-track">
+        <div class="client-logo" *ngFor="let c of clients">
+          <img [src]="c.logo" [alt]="c.nom">
+        </div>
+        <div class="client-logo" *ngFor="let c of clients" aria-hidden="true">
+          <img [src]="c.logo" [alt]="c.nom">
+        </div>
       </div>
     </div>
   </div>
@@ -22,7 +27,7 @@
     </div>
 
     <div class="realisations-grid" *ngIf="realisations.length; else emptyState">
-      <div class="realisation-card" appReveal *ngFor="let r of realisations">
+      <div class="realisation-card reveal-img" appReveal *ngFor="let r of realisations">
         <img [src]="r.image || 'assets/images/facade-scane-tech.jpeg'" [alt]="r.titre">
         <div class="realisation-info">
           <h4>{{ r.titre | bilingual:r.titre_en }}</h4>
