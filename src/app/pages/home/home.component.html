@@ -58,13 +58,11 @@
     </div>
     <div class="client-carousel" appReveal>
       <div class="client-track">
-        <div class="client-logo" *ngFor="let c of clients">
-          <img [src]="c.logo" [alt]="c.nom">
-        </div>
-        <!-- Duplique la liste pour une boucle infinie sans coupure visible -->
-        <div class="client-logo" *ngFor="let c of clients" aria-hidden="true">
-          <img [src]="c.logo" [alt]="c.nom">
-        </div>
+        <ng-container *ngFor="let repetition of [0,1,2,3,4,5]">
+          <div class="client-logo" *ngFor="let c of clients">
+            <img [src]="c.logo" [alt]="c.nom">
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>

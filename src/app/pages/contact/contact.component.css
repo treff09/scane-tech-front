@@ -39,6 +39,7 @@
   padding: 30px;
   box-shadow: 0 16px 36px rgba(21,61,40,.07);
   max-width: 640px;
+  margin: 28px auto 0;
 }
 
 .form-row { display: grid; grid-template-columns: 1fr; gap: 4px 16px; }
